@@ -1,9 +1,9 @@
-using Pizza.Api.Endpoints;
+using Restaurant.Api.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 var app = builder.Build();
-app.MapPizzeriaEndpoints();
+app.MapRestaurantEndpoints();
 
 app.Run();

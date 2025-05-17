@@ -1,14 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pizza.Api", "Pizza.Api\Pizza.Api.csproj", "{83B139EF-D841-426E-A860-511227FAFB69}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurant.Api", "Restaurant.Api\Restaurant.Api.csproj", "{83B139EF-D841-426E-A860-511227FAFB69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pizza.Application", "Pizza.Application\Pizza.Application.csproj", "{1A87E1F8-7B3A-480F-B5CB-AA48D94F9014}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurant.Application", "Restaurant.Application\Restaurant.Application.csproj", "{1A87E1F8-7B3A-480F-B5CB-AA48D94F9014}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pizza.Infrastructure", "Pizza.Infrastructure\Pizza.Infrastructure.csproj", "{0B769DAD-E604-415A-A9DB-1623026D4D34}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurant.Infrastructure", "Restaurant.Infrastructure\Restaurant.Infrastructure.csproj", "{0B769DAD-E604-415A-A9DB-1623026D4D34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pizza.Tests", "Pizza.Tests\Pizza.Tests.csproj", "{02CF4817-8A98-4017-AA88-970BFBCE1544}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurant.Tests", "Restaurant.Tests\Restaurant.Tests.csproj", "{02CF4817-8A98-4017-AA88-970BFBCE1544}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pizza.Domain", "Pizza.Domain\Pizza.Domain.csproj", "{3863D93B-A1B8-47C6-B797-969F93AEDD67}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurant.Domain", "Restaurant.Domain\Restaurant.Domain.csproj", "{3863D93B-A1B8-47C6-B797-969F93AEDD67}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

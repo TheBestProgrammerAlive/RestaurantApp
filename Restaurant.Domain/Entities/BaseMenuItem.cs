@@ -5,11 +5,11 @@ namespace Domain.Entities;
 
 public class BaseMenuItem(Guid id, string name, decimal price, IReadOnlyList<Ingredient> ingredients) : IFoodItem
 {
-    public Guid Id { get; protected init; } = id;
-    public string Name { get; protected init; } = name;
-    public decimal Price { get; protected init; } = price;
+    public Guid Id { get; } = id;
+    public string Name { get; } = name;
+    public decimal Price { get; } = price;
 
-    public IReadOnlyList<Ingredient> Ingredients { get; init; } = ingredients;
+    public IReadOnlyList<Ingredient> Ingredients { get; } = ingredients;
 
     public BaseMenuItem() : this(Guid.Empty, string.Empty, decimal.Zero, Array.Empty<Ingredient>())
     {

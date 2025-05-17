@@ -6,8 +6,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <InvariantGlobalization>true</InvariantGlobalization>
         <PublishAot>true</PublishAot>
-        <RootNamespace>Pizza.Api</RootNamespace>
-        <AssemblyName>Pizza.Api</AssemblyName>
+        <PackageId>Restaurant.Api</PackageId>
     </PropertyGroup>
 
 </Project>

@@ -1,7 +1,6 @@
-using Domain.Interfaces;
 using Domain.ValueObjects;
 
-namespace Domain.Entities;
+namespace Domain.Interfaces;
 
 public interface IModifiedFoodItem : IFoodItem
 {
