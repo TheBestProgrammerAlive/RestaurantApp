@@ -15,7 +15,7 @@ public static class Menu
         new("Extra Cheese", 1.00m)
     };
 
-    public static IReadOnlyList<BaseMenuItem> AvailableBasemenuItems { get; } = new List<BaseMenuItem>
+    public static IReadOnlyList<BaseMenuItem> AvailableBaseMenuItems { get; } = new List<BaseMenuItem>
     {
         new BaseMenuItem(
             Guid.Parse("f1a2b3c4-d5e6-4789-abcd-0123456789ab"),
@@ -55,7 +55,7 @@ public static class Menu
 
     public static bool TryFindMenuItem(Guid menuItemId, out BaseMenuItem? baseMenuItem)
     {
-        baseMenuItem = AvailableBasemenuItems.FirstOrDefault(menuItem => menuItem.Id == menuItemId);
+        baseMenuItem = AvailableBaseMenuItems.FirstOrDefault(menuItem => menuItem.Id == menuItemId);
         return baseMenuItem != null;
     }
 

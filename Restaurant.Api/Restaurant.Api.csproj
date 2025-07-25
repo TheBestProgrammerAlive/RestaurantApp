@@ -9,4 +9,7 @@
         <PackageId>Restaurant.Api</PackageId>
     </PropertyGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\Restaurant.Domain\Restaurant.Domain.csproj"/>
+    </ItemGroup>
 </Project>

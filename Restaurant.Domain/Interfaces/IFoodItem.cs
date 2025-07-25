@@ -4,8 +4,8 @@ namespace Domain.Interfaces;
 
 public interface IFoodItem
 {
-    public Guid Id { get; }
-    public string Name { get; }
-    public decimal Price { get; }
+    public Guid Id { get; init; }
+    public string Name { get; init; }
+    public decimal Price { get; init; }
     public IReadOnlyList<Ingredient> Ingredients { get; }
 }
