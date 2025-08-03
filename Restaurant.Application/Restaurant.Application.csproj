@@ -7,8 +7,17 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <Folder Include="Abstractions\"/>
         <Folder Include="Dtos\"/>
-        <Folder Include="Validators\"/>
+        <Folder Include="Features\MenuManagement\"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="MediatR" Version="13.0.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Restaurant.Domain\Restaurant.Domain.csproj"/>
     </ItemGroup>
 
 </Project>

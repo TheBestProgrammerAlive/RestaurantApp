@@ -1,7 +1,6 @@
-﻿using Domain.Interfaces;
-using Domain.ValueObjects;
+﻿using Domain.ValueObjects;
 
-namespace Restaurant.Infrastructure.Repositories;
+namespace Domain.Interfaces;
 
 public interface IRestaurantRepository
 {
