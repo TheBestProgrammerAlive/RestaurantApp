@@ -5,7 +5,7 @@ namespace Domain.Interfaces;
 public interface IRestaurantRepository
 {
     IFoodItem[] GetAllMenuItems();
-    IFoodItem GetMenuItemById(Guid id);
+    IFoodItem? GetMenuItemById(Guid id);
     void AddMenuItem(IFoodItem menuItem);
     void RemoveMenuItem(IFoodItem menuItem);
     void UpdateMenuItem(IFoodItem menuItem);

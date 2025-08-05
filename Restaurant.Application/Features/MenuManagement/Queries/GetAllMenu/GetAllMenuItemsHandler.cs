@@ -1,9 +1,9 @@
 ﻿using Domain.Interfaces;
 using MediatR;
 
-namespace Restaurant.Application.Queries;
+namespace Restaurant.Application.Features.MenuManagement.Queries.GetAllMenu;
 
-public sealed class GetAllMenuItemsHandler(IRestaurantRepository restaurantRepository)
+internal sealed class GetAllMenuItemsHandler(IRestaurantRepository restaurantRepository)
     : IRequestHandler<GetAllMenuItemsQuery, IFoodItem[]>
 {
     public Task<IFoodItem[]> Handle(GetAllMenuItemsQuery _, CancellationToken cancellationToken)
