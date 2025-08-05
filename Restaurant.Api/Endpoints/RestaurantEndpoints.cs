@@ -1,6 +1,4 @@
-﻿using Domain.Entities;
-using MediatR;
-using Microsoft.AspNetCore.Http.HttpResults;
+﻿using MediatR;
 using Restaurant.Application.Features.MenuManagement.Queries.GetAllMenu;
 using Restaurant.Application.Features.MenuManagement.Queries.GetMenuItem;
 
@@ -18,14 +16,13 @@ public static class RestaurantEndpoints
 
     private static async Task<IResult> GetMenuItemsHandler(IMediator mediator)
     {
-        var result = await mediator.Send(new GetAllMenuItemsQuery()); 
-        return Results.Ok(result);
+        var result = await mediator.Send(new GetAllMenuItemsQuery());
+        return TypedResults.Ok(result);
     }
 
     private static async Task<IResult> GetMenuItemHandler(IMediator mediator, Guid itemId)
     {
         var menuItem = await mediator.Send(new GetMenuItemQuery(itemId));
-        var result =  menuItem is null ? Results.NotFound() : Results.Ok(menuItem);
-        return result;
+        return TypedResults.Ok(menuItem);
     }
 }

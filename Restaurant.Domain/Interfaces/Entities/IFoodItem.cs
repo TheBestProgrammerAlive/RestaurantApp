@@ -1,6 +1,6 @@
 ﻿using Domain.ValueObjects;
 
-namespace Domain.Interfaces;
+namespace Domain.Interfaces.Entities;
 
 public interface IFoodItem
 {

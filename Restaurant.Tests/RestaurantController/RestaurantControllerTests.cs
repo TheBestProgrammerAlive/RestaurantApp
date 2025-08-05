@@ -3,8 +3,9 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Restaurant.Api;
 
-namespace Tests.OrderApi;
+namespace Tests.RestaurantController;
 
 public class RestaurantEndpointsTests(WebApplicationFactory<Program> factory)
     : IClassFixture<WebApplicationFactory<Program>>

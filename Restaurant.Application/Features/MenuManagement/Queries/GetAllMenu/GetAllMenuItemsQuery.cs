@@ -1,4 +1,4 @@
-﻿using Domain.Interfaces;
+﻿using Domain.Interfaces.Entities;
 using MediatR;
 
 namespace Restaurant.Application.Features.MenuManagement.Queries.GetAllMenu;
