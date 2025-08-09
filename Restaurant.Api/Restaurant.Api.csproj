@@ -5,13 +5,15 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <InvariantGlobalization>true</InvariantGlobalization>
-        <PublishAot>true</PublishAot>
+        <PublishAot>false</PublishAot>
         <PackageId>Restaurant.Api</PackageId>
+        <UserSecretsId>23c30eab-19a7-4ede-83d2-6c0cd1b2b1e0</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\Restaurant.Application\Restaurant.Application.csproj" />
         <ProjectReference Include="..\Restaurant.Domain\Restaurant.Domain.csproj"/>
+        <ProjectReference Include="..\Restaurant.Infrastructure\Restaurant.Infrastructure.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

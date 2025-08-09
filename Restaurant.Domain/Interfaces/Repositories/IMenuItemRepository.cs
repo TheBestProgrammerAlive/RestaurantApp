@@ -2,12 +2,11 @@
 
 namespace Domain.Interfaces.Repositories;
 
-public interface IMenuRepository
+public interface IMenuItemRepository
 {
-    Task<IFoodItem[]> GetAllMenuItemsAsync();
+    Task<List<IFoodItem>> GetAllMenuItemsAsync();
     Task<IFoodItem?> GetMenuItemByIdAsync(Guid id);
     Task AddMenuItemAsync(IFoodItem menuItem);
     Task RemoveMenuItemAsync(IFoodItem menuItem);
     Task UpdateMenuItemAsync(IFoodItem menuItem);
-    Task SaveChangesAsync();
 }
