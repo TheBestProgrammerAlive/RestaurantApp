@@ -1,5 +1,5 @@
-﻿using Domain.Interfaces.Repositories;
-using Domain.ValueObjects;
+﻿using Domain.Entities;
+using Domain.Interfaces.Repositories;
 
 namespace Restaurant.Infrastructure.Data.Repositories;
 

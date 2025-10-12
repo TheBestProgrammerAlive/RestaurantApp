@@ -1,5 +1,4 @@
 ﻿using Domain.Interfaces.Entities;
-using Domain.ValueObjects;
 
 namespace Domain.Entities;
 
@@ -7,10 +6,11 @@ public class ModifiedMenuItem(
     Guid id,
     string name,
     decimal price,
-    IReadOnlyList<Ingredient> ingredients,
-    List<Ingredient> additionalIngredients) : BaseMenuItem(id, name, price, ingredients), IModifiedFoodItem
+    ICollection<Ingredient> ingredients,
+    IEnumerable<Ingredient> additionalIngredients) : BaseMenuItem(id, name, price, ingredients), IModifiedFoodItem
 {
-    public List<Ingredient> AdditionalIngredients { get; init; } = additionalIngredients;
+    private readonly List<Ingredient> _additionalIngredients = additionalIngredients.ToList() ?? new();
+    public IReadOnlyList<Ingredient> AdditionalIngredients { get; init; } = _additionalIngredients.AsReadOnly();
 
 
     public ModifiedMenuItem() : this(Guid.Empty, string.Empty, decimal.Zero, Array.Empty<Ingredient>(),
@@ -25,7 +25,7 @@ public class ModifiedMenuItem(
 
     public void AddIngredient(Ingredient ingredient)
     {
-        if (AdditionalIngredients.Count >= Consts.MaxAdditionalIngredients)
+        if (_additionalIngredients.Count >= Consts.MaxAdditionalIngredients)
         {
             throw new InvalidOperationException("Item cannot have more than " + Consts.MaxAdditionalIngredients +
                                                 " additional ingredients.");
@@ -36,12 +36,12 @@ public class ModifiedMenuItem(
             throw new ArgumentException("Ingredient not available.");
         }
 
-        AdditionalIngredients.Add(ingredient);
+        _additionalIngredients.Add(ingredient);
     }
 
     public void RemoveIngredient(Ingredient ingredient)
     {
-        if (!AdditionalIngredients.Any())
+        if (!_additionalIngredients.Any())
         {
             throw new InvalidOperationException("No additional ingredients in item");
         }
@@ -51,6 +51,6 @@ public class ModifiedMenuItem(
             throw new ArgumentException("Ingredient not available.");
         }
 
-        AdditionalIngredients.Remove(ingredient);
+        _additionalIngredients.Remove(ingredient);
     }
 }
