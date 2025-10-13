@@ -10,7 +10,7 @@ public class ModifiedMenuItem(
     IEnumerable<Ingredient> additionalIngredients) : BaseMenuItem(id, name, price, ingredients), IModifiedFoodItem
 {
     private readonly List<Ingredient> _additionalIngredients = additionalIngredients.ToList() ?? new();
-    public IReadOnlyList<Ingredient> AdditionalIngredients { get; init; } = _additionalIngredients.AsReadOnly();
+    public IReadOnlyList<Ingredient> AdditionalIngredients => _additionalIngredients.AsReadOnly();
 
 
     public ModifiedMenuItem() : this(Guid.Empty, string.Empty, decimal.Zero, Array.Empty<Ingredient>(),

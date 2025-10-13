@@ -4,13 +4,13 @@ public static class Menu
 {
     public static IReadOnlyList<Ingredient> AvailableIngredients { get; } = new List<Ingredient>
     {
-        new("Tomato Sauce", 0.50m),
-        new("Mozzarella Cheese", 1.20m),
-        new("Pepperoni", 1.80m),
-        new("Ham", 1.50m),
-        new("Pineapple", 1.00m),
-        new("Basil", 0.40m),
-        new("Extra Cheese", 1.00m)
+        new(Guid.Parse("11111111-1111-1111-1111-111111111111"), "Tomato Sauce", 0.50m),
+        new(Guid.Parse("22222222-2222-2222-2222-222222222222"), "Mozzarella Cheese", 1.20m),
+        new(Guid.Parse("33333333-3333-3333-3333-333333333333"), "Pepperoni", 1.80m),
+        new(Guid.Parse("44444444-4444-4444-4444-444444444444"), "Ham", 1.50m),
+        new(Guid.Parse("55555555-5555-5555-5555-555555555555"), "Pineapple", 1.00m),
+        new(Guid.Parse("66666666-6666-6666-6666-666666666666"), "Basil", 0.40m),
+        new(Guid.Parse("77777777-7777-7777-7777-777777777777"), "Extra Cheese", 1.00m)
     };
 
     public static IReadOnlyList<BaseMenuItem> AvailableBaseMenuItems { get; } = new List<BaseMenuItem>
