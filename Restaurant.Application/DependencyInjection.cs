@@ -1,7 +1,7 @@
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Restaurant.Application.Extensions;
+namespace Restaurant.Application;
 
 public static class DependencyInjection
 {

@@ -1,13 +1,15 @@
-﻿using Domain.Interfaces.Entities;
-
 namespace Domain.Services;
 
 public interface IOrderEvaluatorService
 {
-    decimal CalculateOrder(IOrder order);
+    decimal CalculateOrder(Domain.Entities.Order order);
 }
 
 public class OrderEvaluatorService : IOrderEvaluatorService
 {
-    public decimal CalculateOrder(IOrder order) => order.Items.Sum(item => item.Price);
+    /// <summary>
+    /// Calculates the total price of an order including all customizations.
+    /// Each OrderItem calculates its own price based on base price and modifications.
+    /// </summary>
+    public decimal CalculateOrder(Domain.Entities.Order order) => order.CalculateTotal();
 }

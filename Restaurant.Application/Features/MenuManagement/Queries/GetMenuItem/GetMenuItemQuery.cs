@@ -1,6 +1,6 @@
-using Domain.Interfaces.Entities;
+using Domain.Entities;
 using MediatR;
 
 namespace Restaurant.Application.Features.MenuManagement.Queries.GetMenuItem;
 
-public sealed record GetMenuItemQuery(Guid MenuItemId) : IRequest<IFoodItem>;
+public sealed record GetMenuItemQuery(Guid MenuItemId) : IRequest<MenuItem>;

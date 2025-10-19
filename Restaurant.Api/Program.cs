@@ -1,6 +1,6 @@
 using Restaurant.Api.Endpoints;
 using Restaurant.Api.ExceptionHandling;
-using Restaurant.Application.Extensions;
+using Restaurant.Application;
 using Restaurant.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);

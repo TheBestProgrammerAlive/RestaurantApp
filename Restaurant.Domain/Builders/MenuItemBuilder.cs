@@ -7,7 +7,7 @@ public interface IMenuItemBuilder
     IMenuItemBuilder WithName(string name);
     IMenuItemBuilder WithPrice(decimal price);
     IMenuItemBuilder WithIngredients(List<Ingredient> ingredients);
-    BaseMenuItem Build();
+    MenuItem Build();
 }
 
 public class MenuItemBuilder : IMenuItemBuilder
@@ -48,10 +48,10 @@ public class MenuItemBuilder : IMenuItemBuilder
         return this;
     }
 
-    public BaseMenuItem Build()
+    public MenuItem Build()
     {
         var result = (_id, _name, _price, _ingredients);
         Reset();
-        return new BaseMenuItem(result._id, result._name, result._price, result._ingredients);
+        return new MenuItem(result._id, result._name, result._price, result._ingredients);
     }
 }

@@ -1,21 +1,15 @@
-﻿using System.Collections;
+using System.Collections;
 using Domain.Entities;
 
-namespace Tests.OrderApi;
+namespace Tests.RestaurantController;
 
-public class MenuItemTestData : IEnumerable<object[]>
+public class RestaurantControllerTestData: IEnumerable<object[]>
 {
     public IEnumerator<object[]> GetEnumerator()
     {
-        yield return
-        [
-            new[]
-            {
-                GenerateMargheritaPizza(),
-                GeneratePepperoniPizza(),
-                GenerateHawaiianPizza()
-            }
-        ];
+        yield return [ new object[] { GenerateMargheritaPizza() } ];
+        yield return [ new object[] { GeneratePepperoniPizza() } ];
+        yield return [ new object[] { GenerateHawaiianPizza() } ];
     }
 
     private MenuItem GenerateMargheritaPizza()

@@ -23,7 +23,7 @@ public class RestaurantEndpointsTests(WebApplicationFactory<Program> factory)
         // assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-        var items = await response.Content.ReadFromJsonAsync<IReadOnlyCollection<BaseMenuItem>>(_jsonOptions);
+        var items = await response.Content.ReadFromJsonAsync<IReadOnlyCollection<MenuItem>>(_jsonOptions);
         Assert.NotNull(items);
 
         Assert.Equal(Menu.AvailableBaseMenuItems.Count, items!.Count);
@@ -45,7 +45,7 @@ public class RestaurantEndpointsTests(WebApplicationFactory<Program> factory)
         // assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-        var item = await response.Content.ReadFromJsonAsync<BaseMenuItem>(_jsonOptions);
+        var item = await response.Content.ReadFromJsonAsync<MenuItem>(_jsonOptions);
         Assert.NotNull(item);
         Assert.Equal(existingId, item!.Id);
     }
@@ -62,4 +62,31 @@ public class RestaurantEndpointsTests(WebApplicationFactory<Program> factory)
         // assert
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
+
+    [Theory]
+    [ClassData(typeof(RestaurantControllerTestData))]
+    public async Task PostMenuItem_ReturnsCreated_WhenValidData(MenuItem menuItem)
+    {
+        // arrange
+        // act
+        var response = await _client.PostAsJsonAsync("/menu-items", menuItem);
+        // assert
+        Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task PostMenuItem_ReturnsBadRequest_WhenInvalidData()
+    {
+        // arrange: construct an invalid menu item (e.g., empty name and negative price)
+        var invalidMenuItem = new MenuItem(Guid.NewGuid(), string.Empty, -1m, new List<Ingredient>());
+
+        // act
+        var response = await _client.PostAsJsonAsync("/menu-items", invalidMenuItem);
+
+        // assert
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+    
+
+   
 }

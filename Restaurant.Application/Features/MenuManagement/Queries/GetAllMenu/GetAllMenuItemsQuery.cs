@@ -1,6 +1,6 @@
-﻿using Domain.Interfaces.Entities;
+using Domain.Entities;
 using MediatR;
 
 namespace Restaurant.Application.Features.MenuManagement.Queries.GetAllMenu;
 
-public sealed record GetAllMenuItemsQuery() : IRequest<List<IFoodItem>>;
+public sealed record GetAllMenuItemsQuery() : IRequest<List<MenuItem>>;

@@ -1,45 +1,63 @@
-﻿using Domain.Interfaces.Entities;
-
 namespace Domain.Entities;
 
-public class Order : IOrder
+/// <summary>
+/// Order aggregate root containing OrderItems with their customizations.
+/// </summary>
+public class Order
 {
-    private readonly List<IModifiedFoodItem> _items = new();
+    private readonly List<OrderItem> _items = new();
 
-    public void AddMenuItem(IFoodItem foodItem)
+    public IReadOnlyList<OrderItem> Items => _items.AsReadOnly();
+
+    /// <summary>
+    /// Adds a menu item from the catalog to the order.
+    /// Creates an OrderItem that references the catalog MenuItem.
+    /// </summary>
+    public void AddItem(MenuItem menuItem)
     {
-        if (foodItem is not IModifiedFoodItem)
+        if (menuItem == null)
+            throw new ArgumentNullException(nameof(menuItem));
+
+        var orderItem = new OrderItem(menuItem);
+        _items.Add(orderItem);
+    }
+
+    /// <summary>
+    /// Removes an order item from the order.
+    /// </summary>
+    public void RemoveItem(OrderItem orderItem)
+    {
+        if (orderItem == null)
+            throw new ArgumentNullException(nameof(orderItem));
+
+        if (!_items.Remove(orderItem))
         {
-            var modifiedMenuItem = new ModifiedMenuItem(foodItem);
-            this._items.Add(modifiedMenuItem);
-        }
-        else if (foodItem is IModifiedFoodItem modifiedFoodItem)
-        {
-            this._items.Add(modifiedFoodItem);
+            throw new InvalidOperationException("Cannot remove order item, it's not present in the order.");
         }
     }
-
-    public IReadOnlyList<IModifiedFoodItem> Items => _items.AsReadOnly();
-
-    public void RemoveMenuItem(IModifiedFoodItem menuItem)
+    
+    /// <summary>
+    /// Adds an ingredient to a specific order item.
+    /// </summary>
+    public void AddIngredientToItem(Guid orderItemId, Ingredient ingredient)
     {
-        if (!_items.Remove(menuItem))
-        {
-            throw new InvalidOperationException("Cannot remove menu item from order, it's not present in the order.");
-        }
+        var orderItem = Items.FirstOrDefault(item => item.Id == orderItemId) ??
+                        throw new InvalidOperationException("Order item not found.");
+        orderItem.AddIngredient(ingredient);
     }
 
-    public void AddAdditionalIngredients(Guid menuItemId, Ingredient additionalIngredient)
+    /// <summary>
+    /// Removes an ingredient from a specific order item.
+    /// </summary>
+    public void RemoveIngredientFromItem(Guid orderItemId, Ingredient ingredient)
     {
-        var foodItem = Items.FirstOrDefault(item => item.Id == menuItemId) ??
-                       throw new InvalidOperationException("Menu item not found.");
-        foodItem.AddIngredient(additionalIngredient);
+        var orderItem = Items.FirstOrDefault(item => item.Id == orderItemId) ??
+                        throw new InvalidOperationException("Order item not found.");
+        orderItem.RemoveIngredient(ingredient);
     }
 
-    public void RemoveAdditionalIngredient(Guid menuItemId, Ingredient ingredientToRemove)
-    {
-        var foodItem = Items.FirstOrDefault(item => item.Id == menuItemId) ??
-                       throw new InvalidOperationException("Menu item not found.");
-        foodItem.RemoveIngredient(ingredientToRemove);
-    }
+    /// <summary>
+    /// Calculates the total price of the order including all customizations.
+    /// </summary>
+    public decimal CalculateTotal() => _items.Sum(i => i.CalculatePrice());
 }
