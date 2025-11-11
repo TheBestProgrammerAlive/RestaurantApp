@@ -9,7 +9,7 @@ internal sealed class GetAllMenuItemsHandler(IMenuItemRepository menuItemReposit
 {
     public async Task<List<MenuItem>> Handle(GetAllMenuItemsQuery _, CancellationToken cancellationToken)
     {
-        var result = await menuItemRepository.GetAllMenuItemsAsync();
+        var result = await menuItemRepository.GetAllMenuItemsAsync(cancellationToken);
         return result;
     }
 }

@@ -7,8 +7,8 @@ using Restaurant.Api;
 
 namespace Tests.RestaurantController;
 
-public class RestaurantEndpointsTests(WebApplicationFactory<Program> factory)
-    : IClassFixture<WebApplicationFactory<Program>>
+public class RestaurantEndpointsTests(TestWebAppFactory factory)
+    : IClassFixture<TestWebAppFactory>
 {
     private readonly JsonSerializerOptions _jsonOptions = new(JsonSerializerDefaults.Web);
     private readonly HttpClient _client = factory.CreateClient();
@@ -26,10 +26,10 @@ public class RestaurantEndpointsTests(WebApplicationFactory<Program> factory)
         var items = await response.Content.ReadFromJsonAsync<IReadOnlyCollection<MenuItem>>(_jsonOptions);
         Assert.NotNull(items);
 
-        Assert.Equal(Menu.AvailableBaseMenuItems.Count, items!.Count);
+        Assert.Equal(Tests.TestMenuData.AvailableBaseMenuItems.Count, items!.Count);
 
         // A quick sanity check on one element
-        var firstExpected = Menu.AvailableBaseMenuItems.First();
+        var firstExpected = Tests.TestMenuData.AvailableBaseMenuItems.First();
         Assert.Contains(items, i => i.Id == firstExpected.Id && i.Name == firstExpected.Name);
     }
 
@@ -37,7 +37,7 @@ public class RestaurantEndpointsTests(WebApplicationFactory<Program> factory)
     public async Task GetMenuItem_ReturnsItem_WhenValidData()
     {
         // arrange
-        var existingId = Menu.AvailableBaseMenuItems.First().Id;
+        var existingId = Tests.TestMenuData.AvailableBaseMenuItems.First().Id;
 
         // act
         var response = await _client.GetAsync($"/menu-items/{existingId}");
@@ -77,16 +77,13 @@ public class RestaurantEndpointsTests(WebApplicationFactory<Program> factory)
     [Fact]
     public async Task PostMenuItem_ReturnsBadRequest_WhenInvalidData()
     {
-        // arrange: construct an invalid menu item (e.g., empty name and negative price)
-        var invalidMenuItem = new MenuItem(Guid.NewGuid(), string.Empty, -1m, new List<Ingredient>());
+        // arrange: send invalid payload directly to avoid domain constructor validation throwing
+        var payload = new { id = Guid.NewGuid(), name = "", basePrice = -1m, defaultIngredients = Array.Empty<object>() };
 
         // act
-        var response = await _client.PostAsJsonAsync("/menu-items", invalidMenuItem);
+        var response = await _client.PostAsJsonAsync("/menu-items", payload);
 
         // assert
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
-    
-
-   
 }

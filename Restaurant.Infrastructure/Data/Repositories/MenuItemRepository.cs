@@ -11,20 +11,19 @@ namespace Restaurant.Infrastructure.Data.Repositories;
 /// </summary>
 public class MenuItemRepository(RestaurantContext db) : IMenuItemRepository
 {
-    public async Task<List<MenuItem>> GetAllMenuItemsAsync()
+    public async Task<List<MenuItem>> GetAllMenuItemsAsync( CancellationToken cancellationToken = default)
     {
-        return await db.MenuItems.AsNoTracking().ToListAsync();
+        return await db.MenuItems.AsNoTracking().ToListAsync(cancellationToken);
     }
 
-    public async Task<MenuItem?> GetMenuItemByIdAsync(Guid id)
+    public async Task<MenuItem?> GetMenuItemByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        return await db.MenuItems.FindAsync(id);
+        return await db.MenuItems.FindAsync(id, cancellationToken);
     }
 
-    public Task AddMenuItemAsync(MenuItem menuItem)
+    public async Task AddMenuItemAsync(MenuItem menuItem, CancellationToken cancellationToken = default)
     {
-        db.MenuItems.Add(menuItem);
-        return Task.CompletedTask;
+        await db.MenuItems.AddAsync(menuItem, cancellationToken);
     }
 
     public Task RemoveMenuItemAsync(MenuItem menuItem)

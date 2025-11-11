@@ -1,5 +1,9 @@
-﻿using Domain.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json;
+using Domain.Entities;
 using MediatR;
+using Restaurant.Application.Common.Dtos;
+using Restaurant.Application.Features.MenuManagement.Commands.CreateMenuItem;
 using Restaurant.Application.Features.MenuManagement.Queries.GetAllMenu;
 using Restaurant.Application.Features.MenuManagement.Queries.GetMenuItem;
 
@@ -7,6 +11,7 @@ namespace Restaurant.Api.Endpoints;
 
 public static class RestaurantEndpoints
 {
+
     public static void MapRestaurantEndpoints(this IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("/menu-items");
@@ -19,25 +24,40 @@ public static class RestaurantEndpoints
     private static async Task<IResult> GetMenuItemsHandler(IMediator mediator)
     {
         var result = await mediator.Send(new GetAllMenuItemsQuery());
-        return TypedResults.Ok(result);
+        return Results.Ok(result);
     }
 
     private static async Task<IResult> GetMenuItemHandler(IMediator mediator, Guid itemId)
     {
-        var menuItem = await mediator.Send(new GetMenuItemQuery(itemId));
-        return TypedResults.Ok(menuItem);
-    }
-
-    private static IResult PostMenuItemHandler(MenuItem menuItem)
-    {
-        if (string.IsNullOrWhiteSpace(menuItem.Name) || menuItem.BasePrice < 0)
+        try
         {
-            return TypedResults.BadRequest();
+            var menuItem = await mediator.Send(new GetMenuItemQuery(itemId));
+            return Results.Ok(menuItem);
         }
-
-        // In this simplified example, we don't persist to DB (tests don't require it)
-        // Return Created with a Location header
-        var location = $"/menu-items/{menuItem.Id}";
-        return TypedResults.Created(location, menuItem);
+        catch (Restaurant.Application.Common.Exceptions.NotFoundException)
+        {
+            return Results.StatusCode(StatusCodes.Status404NotFound);
+        }
     }
+
+    private static async Task<IResult> PostMenuItemHandler(IMediator mediator, MenuItemDto request)
+    {
+        if (string.IsNullOrWhiteSpace(request.Name) || request.BasePrice < 0)
+            return Results.BadRequest();
+
+        var command = new CreateMenuItemCommand(request.Name, request.BasePrice, request.DefaultIngredients);
+
+        try
+        {
+            var createdId = await mediator.Send(command);
+            var location = $"/menu-items/{createdId}";
+            return Results.Created(location, new { id = createdId });
+        }
+        catch (ValidationException ex)
+        {
+            return Results.ValidationProblem();
+        }
+    }
+
 }
+

@@ -56,7 +56,7 @@ public class OrderTests
         }
 
         var orderItemToModify = order.Items.First();
-        var ingredientToAdd = Menu.AvailableIngredients.First();
+        var ingredientToAdd = TestMenuData.AvailableIngredients.First();
         // act
         order.AddIngredientToItem(orderItemToModify.Id, ingredientToAdd);
         // assert
@@ -137,7 +137,7 @@ public class OrderTests
         }
 
         var orderEvaluator = new OrderEvaluatorService();
-        var ingredientToAdd = Menu.AvailableIngredients.First();
+        var ingredientToAdd = Tests.TestMenuData.AvailableIngredients.First();
         var orderItemIdToModify = order.Items.First().Id;
         // act
         order.AddIngredientToItem(orderItemIdToModify, ingredientToAdd);

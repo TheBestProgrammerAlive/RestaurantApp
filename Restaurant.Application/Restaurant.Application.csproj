@@ -8,7 +8,6 @@
 
     <ItemGroup>
         <Folder Include="Common\Abstractions\"/>
-        <Folder Include="Common\Dtos\"/>
         <Folder Include="Features\MenuManagement\"/>
     </ItemGroup>
 
@@ -18,6 +17,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Restaurant.Domain\Restaurant.Domain.csproj"/>
+        <ProjectReference Include="..\Restaurant.Infrastructure\Restaurant.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

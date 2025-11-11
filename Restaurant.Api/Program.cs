@@ -11,6 +11,7 @@ builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 var app = builder.Build();
+
 app.UseExceptionHandler();
 app.MapRestaurantEndpoints();
 

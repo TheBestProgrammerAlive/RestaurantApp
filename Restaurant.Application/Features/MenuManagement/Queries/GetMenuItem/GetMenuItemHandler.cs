@@ -10,7 +10,7 @@ internal sealed class GetMenuItemHandler(IMenuItemRepository menuItemRepository)
 {
     public async Task<MenuItem> Handle(GetMenuItemQuery request, CancellationToken cancellationToken)
     {
-        var result = await menuItemRepository.GetMenuItemByIdAsync(request.MenuItemId);
+        var result = await menuItemRepository.GetMenuItemByIdAsync(request.MenuItemId, cancellationToken);
         if (result is null) throw new NotFoundException(nameof(MenuItem), request.MenuItemId);
         return result;
     }

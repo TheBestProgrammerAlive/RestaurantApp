@@ -10,7 +10,7 @@ public class MenuItem
     public string Name { get; private set; }
     public decimal BasePrice { get; private set; }
     public List<Ingredient> DefaultIngredients { get; private set; }
-
+    
     public MenuItem(Guid id, string name, decimal basePrice, List<Ingredient> defaultIngredients)
     {
         if (string.IsNullOrWhiteSpace(name))
@@ -23,9 +23,13 @@ public class MenuItem
         BasePrice = basePrice;
         DefaultIngredients = defaultIngredients ?? new List<Ingredient>();
     }
-
-    // Parameterless constructor for EF Core
-    private MenuItem()
+    
+    public MenuItem(string name, decimal basePrice, List<Ingredient> defaultIngredients)
+        : this(Guid.NewGuid(), name, basePrice, defaultIngredients)
+    {
+    }
+    
+    public MenuItem()
     {
         Name = string.Empty;
         DefaultIngredients = new List<Ingredient>();

@@ -1,6 +1,11 @@
-﻿namespace Domain.Entities;
+using Domain.Entities;
 
-public static class Menu
+namespace Tests;
+
+/// <summary>
+/// Centralized test-only data source that mirrors the old in-memory Menu data.
+/// </summary>
+public static class TestMenuData
 {
     public static IReadOnlyList<Ingredient> AvailableIngredients { get; } = new List<Ingredient>
     {
@@ -50,17 +55,4 @@ public static class Menu
             }
         )
     };
-
-    public static bool TryFindMenuItem(Guid menuItemId, out MenuItem? baseMenuItem)
-    {
-        baseMenuItem = AvailableBaseMenuItems.FirstOrDefault(menuItem => menuItem.Id == menuItemId);
-        return baseMenuItem != null;
-    }
-
-    public static bool TryFindIngredient(string ingredientName, out Ingredient? ingredient)
-    {
-        ingredient = AvailableIngredients.FirstOrDefault(ingredient =>
-            string.Equals(ingredient.Name, ingredientName, StringComparison.CurrentCultureIgnoreCase));
-        return ingredient != null;
-    }
 }

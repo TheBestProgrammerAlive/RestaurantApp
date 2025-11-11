@@ -8,9 +8,9 @@ namespace Domain.Interfaces.Repositories;
 /// </summary>
 public interface IMenuItemRepository
 {
-    Task<List<MenuItem>> GetAllMenuItemsAsync();
-    Task<MenuItem?> GetMenuItemByIdAsync(Guid id);
-    Task AddMenuItemAsync(MenuItem menuItem);
+    Task<List<MenuItem>> GetAllMenuItemsAsync(CancellationToken cancellationToken = default);
+    Task<MenuItem?> GetMenuItemByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    Task AddMenuItemAsync(MenuItem menuItem, CancellationToken cancellationToken = default);
     Task RemoveMenuItemAsync(MenuItem menuItem);
     Task UpdateMenuItemAsync(MenuItem menuItem);
 }

@@ -36,11 +36,6 @@ public class OrderItem
             throw new InvalidOperationException($"Item cannot have more than {Consts.MaxAdditionalIngredients} additional ingredients.");
         }
 
-        if (!Menu.TryFindIngredient(ingredient.Name, out _))
-        {
-            throw new ArgumentException("Ingredient not available.", nameof(ingredient));
-        }
-
         if (!_addedIngredients.Contains(ingredient))
             _addedIngredients.Add(ingredient);
     }
@@ -53,11 +48,6 @@ public class OrderItem
         if (!BaseMenuItem.DefaultIngredients.Any(i => i.Name == ingredient.Name))
         {
             throw new InvalidOperationException("Cannot remove ingredient that's not in the base item.");
-        }
-
-        if (!Menu.TryFindIngredient(ingredient.Name, out _))
-        {
-            throw new ArgumentException("Ingredient not available.", nameof(ingredient));
         }
 
         if (!_removedIngredients.Contains(ingredient))

@@ -2,9 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Restaurant.Infrastructure.Data.Contexts;
 using Restaurant.Infrastructure.Data.Repositories;
+using Restaurant.Infrastructure.Data.Seeders;
 using Restaurant.Infrastructure.Data.UnitsOfWork;
+using Restaurant.Infrastructure.Options;
 
 namespace Restaurant.Infrastructure;
 
@@ -12,8 +15,23 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration config)
     {
-        services.AddDbContext<RestaurantContext>(options =>
-            options.UseNpgsql(config.GetConnectionString("MenuDbConnection")));
+        services.Configure<ConnectionStringsOptions>(opts =>
+        {
+            opts.RestaurantConnDb = config.GetConnectionString("RestaurantConnDb");
+        });
+        
+        services.AddDbContext<RestaurantContext>((sp, options) =>
+        {
+            var csOptions = sp.GetRequiredService<IOptions<ConnectionStringsOptions>>().Value;
+            if (!string.IsNullOrWhiteSpace(csOptions.RestaurantConnDb))
+            {
+                options.UseNpgsql(csOptions.RestaurantConnDb);
+            }
+
+            options.UseSeeding((ctx, _) => BaseMenuItemDataSeeder.Seed((RestaurantContext)ctx));
+            options.UseAsyncSeeding(async (ctx,_, cancellationToken) => await BaseMenuItemDataSeeder.SeedAsync((RestaurantContext)ctx, cancellationToken));
+        });
+
         services.AddScoped<IMenuItemRepository, MenuItemRepository>();
         services.AddScoped<IIngredientRepository, IngredientRepository>();
         services.AddScoped<IUnitOfWork, EfUnitOfWork>();
