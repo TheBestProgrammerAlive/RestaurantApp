@@ -1,6 +1,6 @@
 ﻿namespace Domain;
 
-public class Consts
+public static class Consts
 {
     public const int MaxAdditionalIngredients = 3;
 }
