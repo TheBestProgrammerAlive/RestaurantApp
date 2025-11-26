@@ -1,10 +1,10 @@
 using Domain.Entities;
+using Domain.Interfaces.Repositories;
 using MediatR;
-using Restaurant.Infrastructure.Data.UnitsOfWork;
 
 namespace Restaurant.Application.Features.MenuManagement.Commands.CreateMenuItem;
 
-internal sealed class CreateMenuItemHandler(EfUnitOfWork uow): IRequestHandler<CreateMenuItemCommand, Guid>
+internal sealed class CreateMenuItemHandler(IUnitOfWork uow): IRequestHandler<CreateMenuItemCommand, Guid>
 {
     public async Task<Guid> Handle(CreateMenuItemCommand request, CancellationToken cancellationToken)
     {
