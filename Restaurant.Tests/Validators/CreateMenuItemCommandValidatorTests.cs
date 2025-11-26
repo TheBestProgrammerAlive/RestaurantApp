@@ -54,7 +54,7 @@ public class CreateMenuItemCommandValidatorTests
     public void DefaultIngredients_ReturnsError_WhenNull()
     {
         // arrange
-        var command = new CreateMenuItemCommand("CorrectName", 10, null);
+        var command = new CreateMenuItemCommand("CorrectName", 10, null!);
         // act
         var result = _validator.TestValidate(command);
         // assert
