@@ -1,9 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
-using Domain.Entities;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Restaurant.Api;
+using Restaurant.Application.Common.Dtos;
 
 namespace Tests.RestaurantController;
 
@@ -23,13 +21,13 @@ public class RestaurantEndpointsTests(TestWebAppFactory factory)
         // assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-        var items = await response.Content.ReadFromJsonAsync<IReadOnlyCollection<MenuItem>>(_jsonOptions);
+        var items = await response.Content.ReadFromJsonAsync<IReadOnlyCollection<MenuItemDto>>(_jsonOptions);
         Assert.NotNull(items);
 
-        Assert.Equal(Tests.TestMenuData.AvailableBaseMenuItems.Count, items!.Count);
+        Assert.Equal(TestMenuData.AvailableBaseMenuItems.Count, items!.Count);
 
         // A quick sanity check on one element
-        var firstExpected = Tests.TestMenuData.AvailableBaseMenuItems.First();
+        var firstExpected = TestMenuData.AvailableBaseMenuItems.First();
         Assert.Contains(items, i => i.Id == firstExpected.Id && i.Name == firstExpected.Name);
     }
 
@@ -37,7 +35,7 @@ public class RestaurantEndpointsTests(TestWebAppFactory factory)
     public async Task GetMenuItem_ReturnsItem_WhenValidData()
     {
         // arrange
-        var existingId = Tests.TestMenuData.AvailableBaseMenuItems.First().Id;
+        var existingId = TestMenuData.AvailableBaseMenuItems.First().Id;
 
         // act
         var response = await _client.GetAsync($"/menu-items/{existingId}");
@@ -45,7 +43,7 @@ public class RestaurantEndpointsTests(TestWebAppFactory factory)
         // assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-        var item = await response.Content.ReadFromJsonAsync<MenuItem>(_jsonOptions);
+        var item = await response.Content.ReadFromJsonAsync<MenuItemDto>(_jsonOptions);
         Assert.NotNull(item);
         Assert.Equal(existingId, item!.Id);
     }
@@ -65,7 +63,7 @@ public class RestaurantEndpointsTests(TestWebAppFactory factory)
 
     [Theory]
     [ClassData(typeof(RestaurantControllerTestData))]
-    public async Task PostMenuItem_ReturnsCreated_WhenValidData(MenuItem menuItem)
+    public async Task PostMenuItem_ReturnsCreated_WhenValidData(MenuItemDto menuItem)
     {
         // arrange
         // act

@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using FluentValidation;
 using Restaurant.Application.Common.Dtos;
 using Restaurant.Application.Common.Exceptions;
+using Restaurant.Application.Common.Mapping;
 using Restaurant.Application.Features.MenuManagement.Commands.CreateMenuItem;
 using Restaurant.Application.Features.MenuManagement.Queries.GetAllMenu;
 using Restaurant.Application.Features.MenuManagement.Queries.GetMenuItem;
@@ -23,7 +23,8 @@ public static class RestaurantEndpoints
     private static async Task<IResult> GetMenuItemsHandler(IMediator mediator)
     {
         var result = await mediator.Send(new GetAllMenuItemsQuery());
-        return Results.Ok(result);
+        var dto = result.ToDto();
+        return Results.Json(dto);
     }
 
     private static async Task<IResult> GetMenuItemHandler(IMediator mediator, Guid itemId)
@@ -31,7 +32,8 @@ public static class RestaurantEndpoints
         try
         {
             var menuItem = await mediator.Send(new GetMenuItemQuery(itemId));
-            return Results.Ok(menuItem);
+            var dto = menuItem.ToDto();
+            return Results.Json(dto);
         }
         catch (NotFoundException)
         {
@@ -41,7 +43,8 @@ public static class RestaurantEndpoints
 
     private static async Task<IResult> PostMenuItemHandler(IMediator mediator, MenuItemDto request)
     {
-        var command = new CreateMenuItemCommand(request.Name, request.BasePrice, request.DefaultIngredients);
+        var ingredients = request.DefaultIngredients?.ToEntities() ?? new();
+        var command = new CreateMenuItemCommand(request.Name, request.BasePrice, ingredients);
         
             var createdId = await mediator.Send(command);
             var location = $"/menu-items/{createdId}";
