@@ -24,7 +24,7 @@ public static class RestaurantEndpoints
     {
         var result = await mediator.Send(new GetAllMenuItemsQuery());
         var dto = result.ToDto();
-        return Results.Json(dto);
+        return Results.Ok(dto);
     }
 
     private static async Task<IResult> GetMenuItemHandler(IMediator mediator, Guid itemId)
@@ -33,7 +33,7 @@ public static class RestaurantEndpoints
         {
             var menuItem = await mediator.Send(new GetMenuItemQuery(itemId));
             var dto = menuItem.ToDto();
-            return Results.Json(dto);
+            return Results.Ok(dto);
         }
         catch (NotFoundException)
         {
